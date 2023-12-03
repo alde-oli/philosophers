@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   status.c                                           :+:      :+:    :+:   */
+/*   timings.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/02 11:31:32 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/02 11:31:32 by alde-oli         ###   ########.fr       */
+/*   Created: 2023/12/03 21:51:32 by alde-oli          #+#    #+#             */
+/*   Updated: 2023/12/03 21:51:32 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_eat(int name)
+t_timings	get_timings(char **av)
 {
-	printf("Philosopher %d is eating\n", name);
+	t_timings	timings;
+
+	timings.die = ft_atoi(av[2]);
+	timings.eat = ft_atoi(av[3]);
+	timings.sleep = ft_atoi(av[4]);
+	timings.nb_meals = ft_atoi(av[5]);
+	return (timings);
 }
 
-void	print_sleep(int name)
+int	check_timings(t_timings timings)
 {
-	printf("Philosopher %d is sleeping\n", name);
-}
-
-void	print_think(int name)
-{
-	printf("Philosopher %d is thinking\n", name);
-}
-
-void	print_dead(int name)
-{
-	printf("Philosopher %d is dead\n", name);
+	if (timings.die < 0 || timings.eat < 0 || timings.sleep < 0
+		|| timings.nb_meals < 0)
+	{
+		printf("Error: timings must be positive integers\n");
+		return (1);
+	}
+	return (0);
 }

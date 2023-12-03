@@ -19,6 +19,15 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-# include "status.h"
+typedef struct	s_philosopher
+{
+	int 			id;	
+	pthread_t		thread;	
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+}	t_philosopher;
+
+# include "print_status.h"
+# include "timings.h"
 
 #endif

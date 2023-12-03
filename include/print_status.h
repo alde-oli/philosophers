@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   status.h                                           :+:      :+:    :+:   */
+/*   print_status.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STATUS_H
-# define STATUS_H
+#ifndef PRINT_STATUS_H
+# define PRINT_STATUS_H
 
 #include "philosophers.h"
 
-void	eat(int name);
-void	think(int name);
-void	sleep(int name);
-void	dead(int name);
+void	print_eat(int name);
+void	print_think(int name);
+void	print_sleep(int name);
+void	print_dead(int name);
 
 #endif

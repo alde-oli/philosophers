@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   status.c                                           :+:      :+:    :+:   */
+/*   timings.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/02 11:31:32 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/02 11:31:32 by alde-oli         ###   ########.fr       */
+/*   Created: 2023/12/03 21:49:26 by alde-oli          #+#    #+#             */
+/*   Updated: 2023/12/03 21:49:26 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef TIMINGS_H
+# define TIMINGS_H
+
 #include "philosophers.h"
 
-void	print_eat(int name)
+typedef struct s_timings
 {
-	printf("Philosopher %d is eating\n", name);
-}
+    int die;
+    int eat;
+    int sleep;
+    int nb_meals;
+}   t_timings;
 
-void	print_sleep(int name)
-{
-	printf("Philosopher %d is sleeping\n", name);
-}
-
-void	print_think(int name)
-{
-	printf("Philosopher %d is thinking\n", name);
-}
-
-void	print_dead(int name)
-{
-	printf("Philosopher %d is dead\n", name);
-}
+#endif
