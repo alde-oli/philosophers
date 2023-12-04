@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   my_time.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/02 15:34:40 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/04 10:42:30 by alde-oli         ###   ########.fr       */
+/*   Created: 2023/12/04 10:25:36 by alde-oli          #+#    #+#             */
+/*   Updated: 2023/12/04 10:25:58 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#include "philosophers.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <pthread.h>
-# include <unistd.h>
-# include <sys/time.h>
+unsigned long long	get_cur_time(void)
+{
+	struct timeval	tv;
 
-# include "structs.h"
-# include "mrclean.h"
-# include "ft_atoi.h"
-# include "print_status.h"
-# include "timings.h"
-# include "init.h"
-# include "routines.h"
-# include "my_time.h"
-
-#endif
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000LL) + (tv.tv_usec / 1000LL));
+}

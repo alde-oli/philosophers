@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/02 15:34:40 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/04 10:42:30 by alde-oli         ###   ########.fr       */
+/*   Created: 2023/12/04 10:34:53 by alde-oli          #+#    #+#             */
+/*   Updated: 2023/12/04 12:52:48 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <pthread.h>
-# include <unistd.h>
-# include <sys/time.h>
 
-# include "structs.h"
-# include "mrclean.h"
-# include "ft_atoi.h"
-# include "print_status.h"
-# include "timings.h"
-# include "init.h"
-# include "routines.h"
-# include "my_time.h"
+typedef struct s_timings
+{
+	int	die;
+	int	eat;
+	int	sleep;
+	int	nb_meals;
+}	t_timings;
+
+typedef struct s_philo
+{
+	int					id;
+	pthread_t			thread;
+	pthread_t			tracker;	
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+	t_timings			timings;
+	unsigned long long	last_meal;
+	int					is_dead;
+}	t_philo;
 
 #endif

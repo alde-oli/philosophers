@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/02 15:34:40 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/04 10:42:30 by alde-oli         ###   ########.fr       */
+/*   Created: 2023/12/04 10:41:01 by alde-oli          #+#    #+#             */
+/*   Updated: 2023/12/04 10:42:17 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+int	ft_atoi(char *s)
+{
+	int	i;
+	int	nb;
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <pthread.h>
-# include <unistd.h>
-# include <sys/time.h>
-
-# include "structs.h"
-# include "mrclean.h"
-# include "ft_atoi.h"
-# include "print_status.h"
-# include "timings.h"
-# include "init.h"
-# include "routines.h"
-# include "my_time.h"
-
-#endif
+	i = 0;
+	nb = 0;
+	while (s[i])
+	{
+		nb = nb * 10 + s[i] - '0';
+		i++;
+	}
+	return (nb);
+}
