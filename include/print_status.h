@@ -15,6 +15,7 @@
 
 #include "philosophers.h"
 
+void	print_fork(int name);
 void	print_eat(int name);
 void	print_think(int name);
 void	print_sleep(int name);

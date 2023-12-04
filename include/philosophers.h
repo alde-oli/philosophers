@@ -6,7 +6,7 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:34:40 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/02 15:34:40 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/04 07:24:50 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@
 
 typedef struct	s_philosopher
 {
-	int 			id;	
-	pthread_t		thread;	
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
+	int 				id;	
+	pthread_t			thread;
+	pthread_t			tracker;	
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+	t_timings			timings;
+	unsigned long long	last_meal;
+	int					is_dead;
 }	t_philosopher;
 
 # include "print_status.h"

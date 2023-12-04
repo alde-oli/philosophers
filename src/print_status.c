@@ -6,11 +6,16 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 11:31:32 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/02 11:31:32 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/04 08:06:04 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	print_fork(int name)
+{
+	printf("Philosopher %d has taken a fork\n", name);
+}
 
 void	print_eat(int name)
 {
@@ -29,5 +34,5 @@ void	print_think(int name)
 
 void	print_dead(int name)
 {
-	printf("Philosopher %d is dead\n", name);
+	printf("Philosopher %d died\n", name);
 }
