@@ -6,7 +6,7 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 11:31:32 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/04 11:45:03 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:26:23 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	print_think(int name)
 
 void	print_dead(int name)
 {
-	printf("Philosopher %d died\n", name);
+	printf("Philosopher %d died !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n", name);
 }
