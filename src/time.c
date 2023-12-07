@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_status.c                                     :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/02 11:31:32 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/04 22:26:23 by alde-oli         ###   ########.fr       */
+/*   Created: 2023/12/05 19:05:55 by alde-oli          #+#    #+#             */
+/*   Updated: 2023/12/06 15:25:36 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_fork(int name)
+unsigned long long	get_cur_time(void)
 {
-	printf("Philosopher %d has taken a fork\n", name);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000LL) + (tv.tv_usec / 1000LL));
 }
 
-void	print_eat(int name)
+void	pls_wait(unsigned long long time_ms)
 {
-	printf("Philosopher %d is eating\n", name);
-}
+	unsigned long long	start;
+	int					sleep_time;
 
-void	print_sleep(int name)
-{
-	printf("Philosopher %d is sleeping\n", name);
-}
-
-void	print_think(int name)
-{
-	printf("Philosopher %d is thinking\n", name);
-}
-
-void	print_dead(int name)
-{
-	printf("Philosopher %d died !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n", name);
+	start = get_cur_time();
+	sleep_time = time_ms - 1;
+	if (sleep_time > 0)
+		usleep(sleep_time * 1000);
+	while (get_cur_time() - start < time_ms)
+		continue ;
 }

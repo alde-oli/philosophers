@@ -1,29 +1,45 @@
-NAME = philosophers
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+NAME := philo
+NAME_BONUS := philo_bonus
 
-SRC_DIR = src/
-INC_DIR = include/
-OBJ_DIR = obj/
+CC := gcc
+CFLAGS := -Wall -Werror -Wextra
 
-SRCS = $(addprefix $(SRC_DIR), init.c my_time.c routines.c main.c print_status.c timings.c ft_atoi.c mrclean.c)
-OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+SRC_DIR := src
+SRC_BONUS_DIR := src_bonus
+OBJ_DIR := obj
+INC_DIR := include
+INC_BONUS_DIR := include_bonus
+
+SRCS := $(wildcard $(SRC_DIR)/*.c)
+SRCS_BONUS := $(wildcard $(SRC_BONUS_DIR)/*.c)
+OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS_BONUS := $(SRCS_BONUS:$(SRC_BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(INC_DIR)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJS_BONUS)
+	$(CC) $(CFLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) -I$(INC_BONUS_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_BONUS_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I$(INC_BONUS_DIR) -c $< -o $@
+
+$(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_BONUS)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

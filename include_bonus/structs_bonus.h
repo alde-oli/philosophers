@@ -1,18 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.h                                          :+:      :+:    :+:   */
+/*   structs_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 10:41:54 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/04 10:42:10 by alde-oli         ###   ########.fr       */
+/*   Created: 2023/12/06 08:59:10 by alde-oli          #+#    #+#             */
+/*   Updated: 2023/12/07 21:56:01 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ATOI_H
-# define FT_ATOI_H
+#ifndef STRUCTS_BONUS_H
+# define STRUCTS_BONUS_H
 
-int	ft_atoi(const char *str);
+# include <pthread.h>
+
+typedef struct s_vars
+{
+	int					t_die;
+	int					t_eat;
+	int					t_sleep;
+	int					nb_meals;
+	unsigned long long	last_meal;
+}	t_vars;
+
+typedef struct s_philo
+{
+	int				id;
+	pthread_t		overwatch;
+	t_vars			v;
+	unsigned long	start;
+	int				is_dead;
+}	t_philo;
 
 #endif

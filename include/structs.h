@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 10:34:53 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/04 12:52:48 by alde-oli         ###   ########.fr       */
+/*   Created: 2023/12/06 08:59:10 by alde-oli          #+#    #+#             */
+/*   Updated: 2023/12/07 21:55:25 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,25 @@
 
 # include <pthread.h>
 
-typedef struct s_timings
+typedef struct s_vars
 {
-	int	die;
-	int	eat;
-	int	sleep;
-	int	nb_meals;
-}	t_timings;
+	int					t_die;
+	int					t_eat;
+	int					t_sleep;
+	int					nb_meals;
+	unsigned long long	last_meal;
+}	t_vars;
 
 typedef struct s_philo
 {
-	int					id;
-	pthread_t			thread;
-	pthread_t			tracker;	
-	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		*right_fork;
-	t_timings			timings;
-	unsigned long long	last_meal;
-	int					is_dead;
+	int				id;
+	pthread_t		thread_p;
+	pthread_t		overwatch;
+	pthread_mutex_t	*left_f;
+	pthread_mutex_t	*right_f;
+	t_vars			v;
+	unsigned long	start;
+	int				is_dead;
 }	t_philo;
 
 #endif
