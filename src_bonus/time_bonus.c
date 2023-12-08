@@ -6,11 +6,11 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:05:55 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/07 21:44:45 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:00:28 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers_bonus.h"
+#include "../include_bonus/philosophers_bonus.h"
 
 unsigned long long	get_cur_time(void)
 {

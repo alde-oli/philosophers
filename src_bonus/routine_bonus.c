@@ -6,30 +6,34 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 21:42:48 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/07 23:06:49 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:48:28 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers_bonus.h"
+#include "../include_bonus/philosophers_bonus.h"
 
 static void	*overwatch_routine(void *philo_p);
-static int	do_cycle(t_philo *philo, sem_t *forks);
+static int	do_cycle(t_philo *philo);
 
-void	*philo_routine(t_philo *philo, sem_t *forks, int lonely)
+void	*philo_routine(void *philosopher, int is_lonely)
 {
-	philo->is_dead = 0;
+	t_philo				*philo;
+
+	philo = (t_philo *)philosopher;
 	philo->start = get_cur_time();
-	philo->v.last_meal = get_cur_time();
-	pthread_create(&philo->overwatch, NULL, overwatch_routine, philo);
-	if (lonely == 1)
+	philo->v.last_meal = philo->start;
+	usleep(!(philo->id % 2) * philo->v.t_eat * 850);
+	pthread_create(&philo->overwatch, NULL, overwatch_routine, philosopher);
+	if (is_lonely)
 		while (1)
-			if (philo->is_dead)
-				return (1);
-	do_cycle(philo, forks);
-	if (!philo->is_dead)
-		printf("philosopher %d survived\n", philo->id);
-	pthread_join(philo->overwatch, NULL);
-	return (0);
+			if (philo->is_dead && !pthread_join(philo->overwatch, NULL))
+				break ;
+	if (!is_lonely)
+	{
+		do_cycle(philo);
+		pthread_join(philo->overwatch, NULL);
+	}
+	return (NULL);
 }
 
 static void	*overwatch_routine(void *philo_p)
@@ -44,30 +48,30 @@ static void	*overwatch_routine(void *philo_p)
 		pls_wait(1);
 	}
 	if (philo->is_dead)
-		display_action(philo->id, " died\n", philo->start);
+		display_action(philo, " died\n");
 	return (NULL);
 }
 
-static int	do_cycle(t_philo *philo, sem_t *forks)
+static int	do_cycle(t_philo *philo)
 {
-	sem_wait(forks);
+	sem_wait(philo->forks);
 	if (philo->is_dead)
-		return (sem_post(forks));
-	display_action(philo->id, " has taken a fork\n", philo->start);
-	display_action(philo->id, " has taken a fork\n", philo->start);
+		return (sem_post(philo->forks));
+	display_action(philo, " has taken a fork\n");
+	display_action(philo, " has taken a fork\n");
 	philo->v.last_meal = get_cur_time();
-	display_action(philo->id, " is eating\n", philo->start);
+	display_action(philo, " is eating\n");
 	pls_wait(philo->v.t_eat);
-	sem_post(forks);
+	sem_post(philo->forks);
 	philo->v.nb_meals--;
 	if (philo->is_dead)
 		return (0);
-	display_action(philo->id, " is sleeping\n", philo->start);
+	display_action(philo, " is sleeping\n");
 	pls_wait(philo->v.t_sleep);
 	if (!philo->is_dead && philo->v.nb_meals)
 	{
-		display_action(philo->id, " is thinking\n", philo->start);
-		return (do_cycle(philo, forks));
+		display_action(philo, " is thinking\n");
+		return (do_cycle(philo));
 	}
 	return (0);
 }

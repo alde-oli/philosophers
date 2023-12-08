@@ -6,7 +6,7 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:07:10 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/07 20:38:33 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:34:47 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ t_philo				*init_philo(int nb_philo, pthread_mutex_t *forks,
 						t_vars sim_vars);
 void				clear_forks(pthread_mutex_t *forks, int nb_philo);
 int					ft_atoi(char *s);
-void				*philo_routine(t_philo *philo);
-void				display_action(int id, char *action,
-						unsigned long long start_time);
+void				*philo_routine(void *philo);
+int					display_action(t_philo *philo, char *action);
 unsigned long long	get_cur_time(void);
 void				pls_wait(unsigned long long time_ms);
 

@@ -6,13 +6,16 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:38:24 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/07 23:06:18 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:46:07 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers_bonus.h"
+#include "../include_bonus/philosophers_bonus.h"
+#include <semaphore.h>
 
-static int	setup_and_run_sim(int nb_philo, t_vars sim_vars);
+static int		killall(t_philo *philo, int *pids, int nb_philo);
+static t_philo	*setup_philo(int nb_philo, t_vars sim_vars);
+static int		setup_and_run_sim(int nb_philo, t_vars sim_vars);
 
 int	main(int ac, char **av)
 {
@@ -37,29 +40,66 @@ int	main(int ac, char **av)
 
 static int	setup_and_run_sim(int nb_philo, t_vars sim_vars)
 {
-	t_philo			philo;
-	static int		i = 0;
-	sem_t			*forks;
-	pid_t			pid;
+	t_philo		*philo;
+	int			i;
+	int			*pids;
 
-	forks = sem_open("forks", O_CREAT, 0644, nb_philo / 2);
-	if (forks == SEM_FAILED)
-		return (1);
-	sem_unlink("forks");
-	philo.v = sim_vars;
+	i = 0;
+	philo = setup_philo(nb_philo, sim_vars);
+	pids = malloc(sizeof(int) * nb_philo);
 	while (i < nb_philo)
 	{
-		printf("coucou\n");
-		philo.id = i + 1;
-		pid = fork();
-		if (pid == 0)
-			return (philo_routine(&philo, forks, nb_philo));
-		else if (pid < 0)
-			return (1);
+		pids[i] = fork();
+		if (!pids[i])
+		{
+			philo_routine(&philo[i], nb_philo == 1);
+			killall(philo, pids, nb_philo);
+			return (0);
+		}
+		else if (pids[i] < 0)
+			return (killall(philo, pids, nb_philo));
 		i++;
 	}
-	while (waitpid(-1, NULL, 0))
-		;
-	sem_close(forks);
+	i = 0;
+	while (i < nb_philo)
+		waitpid(pids[i++], NULL, 0);
 	return (0);
+}
+
+static t_philo	*setup_philo(int nb_philo, t_vars sim_vars)
+{
+	t_philo	*philo;
+	int		i;
+	sem_t	*forks;
+	sem_t	*msg;
+
+	i = 0;
+	philo = malloc(sizeof(t_philo) * nb_philo);
+	forks = sem_open("forks", O_CREAT, 0644, nb_philo / 2);
+	msg = sem_open("msg", O_CREAT, 0644, 1);
+	sem_unlink("forks");
+	sem_unlink("msg");
+	while (i < nb_philo)
+	{
+		philo[i].v = sim_vars;
+		philo[i].id = i + 1;
+		philo[i].forks = forks;
+		philo[i].msg = msg;
+		i++;
+	}
+	return (philo);
+}
+
+static int	killall(t_philo *philo, int *pids, int nb_philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_philo)
+		kill(pids[i++], SIGKILL);
+	sem_close(philo->forks);
+	sem_close(philo->msg);
+	free(philo);
+	free(pids);
+	return (1);
 }
