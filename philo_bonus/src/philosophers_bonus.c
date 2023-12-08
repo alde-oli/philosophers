@@ -6,12 +6,11 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:38:24 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/08 15:46:07 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:58:54 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include_bonus/philosophers_bonus.h"
-#include <semaphore.h>
+#include "philosophers_bonus.h"
 
 static int		killall(t_philo *philo, int *pids, int nb_philo);
 static t_philo	*setup_philo(int nb_philo, t_vars sim_vars);
@@ -52,8 +51,9 @@ static int	setup_and_run_sim(int nb_philo, t_vars sim_vars)
 		pids[i] = fork();
 		if (!pids[i])
 		{
-			philo_routine(&philo[i], nb_philo == 1);
-			killall(philo, pids, nb_philo);
+			i = philo_routine(&philo[i], nb_philo == 1);
+			if (i == 1)
+				killall(philo, pids, nb_philo);
 			return (0);
 		}
 		else if (pids[i] < 0)

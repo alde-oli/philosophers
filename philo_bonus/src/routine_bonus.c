@@ -6,16 +6,16 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 21:42:48 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/08 15:48:28 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:59:53 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include_bonus/philosophers_bonus.h"
+#include "philosophers_bonus.h"
 
 static void	*overwatch_routine(void *philo_p);
 static int	do_cycle(t_philo *philo);
 
-void	*philo_routine(void *philosopher, int is_lonely)
+int	philo_routine(void *philosopher, int is_lonely)
 {
 	t_philo				*philo;
 
@@ -33,7 +33,7 @@ void	*philo_routine(void *philosopher, int is_lonely)
 		do_cycle(philo);
 		pthread_join(philo->overwatch, NULL);
 	}
-	return (NULL);
+	return (philo->is_dead);
 }
 
 static void	*overwatch_routine(void *philo_p)

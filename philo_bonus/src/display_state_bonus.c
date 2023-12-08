@@ -6,12 +6,12 @@
 /*   By: alde-oli <alde-oli@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 21:07:15 by alde-oli          #+#    #+#             */
-/*   Updated: 2023/12/08 15:34:00 by alde-oli         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:57:01 by alde-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include_bonus/philosophers_bonus.h"
-#include <semaphore.h>
+#include "philosophers_bonus.h"
+
 
 static int	ft_nbrlen(int n);
 static char	*ft_itoa(int n);
